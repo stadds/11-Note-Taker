@@ -46,7 +46,7 @@ app.get("/notes",function(req,res){
 // return all notes saved
 app.get(apiNOTES, function(req,res) {
 
-    const allNotes = JSON.parse(fs.readFileSync(path.join(__dirname,"/db/db.json")));
+    const allNotes = getDBFile(); //JSON.parse(fs.readFileSync(path.join(__dirname,"/db/db.json")));
 
     console.log(allNotes);
 
@@ -58,18 +58,35 @@ app.get(apiNOTES, function(req,res) {
 
 //return new note
 app.post(apiNOTES, function(req,res){
-    console.log(req.body);
 
+    let newNote = req.body;
+    newNote.id = new Date().getTime().toString();
+    console.log(newNote);
+
+    let allNotes = getDBFile(); //JSON.parse(fs.readFileSync(path.join(__dirname,"/db/db.json")));
+    allNotes.push(newNote);
+    
+    fs.writeFileSync(path.join(__dirname,"/db/db.json"),JSON.stringify(allNotes));
+
+    res.status(201).send(newNote);
 });
 
 // APIs - DELETE
 // =============================================================
 
+app.delete(apiNotesID, function(req,res){
 
-// app.delete(apiNotesID, function(req,res){
+});
 
-// });
 
+// HELPER FUNCTIONS
+// =============================================================
+function getDBFile(){
+    let rawData = fs.readFileSync(path.join(__dirname,"/db/db.json"));
+    let jsonData = JSON.parse(rawData);
+
+    return jsonData;
+}
 
 
 // Starts the server to begin listening
