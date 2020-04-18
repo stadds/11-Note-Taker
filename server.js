@@ -32,12 +32,11 @@ const apiNotesID = "/api/notes/:id";
 
 //route that sends the user first to the home page
 app.get("/",function(req,res){
-    console.log(__dirname)
-    res.sendFile(path.join(__dirname,"/index.html"));
+    res.sendFile(path.join(__dirname,"/public/index.html"));
 });
 
 app.get("/notes",function(req,res){
-    res.sendFile(path.join(__dirname,"/notes.html"));
+    res.sendFile(path.join(__dirname,"/public/notes.html"));
 });
 
 
@@ -58,10 +57,10 @@ app.get(apiNOTES, function(req,res) {
 // =============================================================
 
 //return new note
-// app.post(apiNOTES, function(req,res){
-//     console.log(req.body);
+app.post(apiNOTES, function(req,res){
+    console.log(req.body);
 
-// });
+});
 
 // APIs - DELETE
 // =============================================================
