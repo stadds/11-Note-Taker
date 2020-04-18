@@ -18,7 +18,7 @@ var PORT = process.env.PORT || 3000;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(express.static(__dirname + '/public'));
 
 // API Const Variables
 // =============================================================
@@ -32,11 +32,12 @@ const apiNotesID = "/api/notes/:id";
 
 //route that sends the user first to the home page
 app.get("/",function(req,res){
-    res.sendFile(path.join(__dirname,"/public/index.html"));
+    console.log(__dirname)
+    res.sendFile(path.join(__dirname,"/index.html"));
 });
 
 app.get("/notes",function(req,res){
-    res.sendFile(path.join(__dirname,"/public/notes.html"));
+    res.sendFile(path.join(__dirname,"/notes.html"));
 });
 
 
@@ -46,7 +47,7 @@ app.get("/notes",function(req,res){
 // return all notes saved
 app.get(apiNOTES, function(req,res) {
 
-    const allNotes = JSON.parse(fs.readFileSync(path.join(__dirname,"/db/db.json"),encoding));
+    const allNotes = JSON.parse(fs.readFileSync(path.join(__dirname,"/db/db.json")));
 
     console.log(allNotes);
 
@@ -58,6 +59,7 @@ app.get(apiNOTES, function(req,res) {
 
 //return new note
 // app.post(apiNOTES, function(req,res){
+//     console.log(req.body);
 
 // });
 
