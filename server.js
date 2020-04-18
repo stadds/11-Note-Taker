@@ -65,8 +65,10 @@ app.post(apiNOTES, function(req,res){
 
     let allNotes = getDBFile(); //JSON.parse(fs.readFileSync(path.join(__dirname,"/db/db.json")));
     allNotes.push(newNote);
+
+    writeToDBFile(allNotes);
     
-    fs.writeFileSync(path.join(__dirname,"/db/db.json"),JSON.stringify(allNotes));
+    //fs.writeFileSync(path.join(__dirname,"/db/db.json"),JSON.stringify(allNotes));
 
     res.status(201).send(newNote);
 });
@@ -88,6 +90,12 @@ function getDBFile(){
     return jsonData;
 }
 
+function writeToDBFile(tempJSON){
+
+    let stringJSON = JSON.stringify(tempJSON,null,2);
+
+    fs.writeFileSync(path.join(__dirname,"/db/db.json"),stringJSON);
+}
 
 // Starts the server to begin listening
 // =============================================================
