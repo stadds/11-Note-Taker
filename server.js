@@ -7,9 +7,6 @@ const util = require("util");
 
 const encoding = "utf-8";
 
-const readFileAsync = util.promisify(fs.readFile);
-const writeFileAsync = util.promisify(fs.writeFile);
-
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -95,7 +92,7 @@ app.delete(apiNotesID, function(req,res){
 // HELPER FUNCTIONS
 // =============================================================
 function getDBFile(){
-    let rawData = fs.readFileSync(path.join(__dirname,"/db/db.json"));
+    let rawData = fs.readFileSync(path.join(__dirname,"/db/db.json"),"utf8");
     let jsonData = JSON.parse(rawData);
 
     return jsonData;
